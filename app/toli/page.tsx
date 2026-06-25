@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 
 interface Urgamal {
   id: number
@@ -35,6 +35,7 @@ const AMJDRAL_COLORS: Record<string, string> = {
 export default function ToliPage() {
   const [data, setData] = useState<ApiResponse | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const [q, setQ] = useState('')
   const [bueleg, setBueleg] = useState('')
   const [nas, setNas] = useState('')
@@ -42,31 +43,59 @@ export default function ToliPage() {
   const [page, setPage] = useState(1)
   const [selected, setSelected] = useState<Urgamal | null>(null)
   const [inputVal, setInputVal] = useState('')
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   const fetchData = useCallback(async () => {
     setLoading(true)
-    const params = new URLSearchParams()
-    if (q) params.set('q', q)
-    if (bueleg) params.set('bueleg', bueleg)
-    if (nas) params.set('nas', nas)
-    if (amjdral) params.set('amjdral', amjdral)
-    params.set('page', String(page))
-    params.set('limit', '24')
-    const res = await fetch(`/api/urgamal?${params}`)
-    const json = await res.json()
-    setData(json)
-    setLoading(false)
+    setError(null)
+    try {
+      const params = new URLSearchParams()
+      if (q) params.set('q', q)
+      if (bueleg) params.set('bueleg', bueleg)
+      if (nas) params.set('nas', nas)
+      if (amjdral) params.set('amjdral', amjdral)
+      params.set('page', String(page))
+      params.set('limit', '24')
+      const res = await fetch(`/api/urgamal?${params}`)
+      if (!res.ok) throw new Error(`Серверийн алдаа: ${res.status}`)
+      const json = await res.json()
+      setData(json)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Өгөгдөл ачаалахад алдаа гарлаа')
+    } finally {
+      setLoading(false)
+    }
   }, [q, bueleg, nas, amjdral, page])
 
   useEffect(() => { fetchData() }, [fetchData])
 
+  // Escape key closes modal
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelected(null) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value
+    setInputVal(val)
+    // Debounce: 400ms-ийн дараа автоматаар хайна
+    if (debounceRef.current) clearTimeout(debounceRef.current)
+    debounceRef.current = setTimeout(() => {
+      setQ(val)
+      setPage(1)
+    }, 400)
+  }
+
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
+    if (debounceRef.current) clearTimeout(debounceRef.current)
     setQ(inputVal)
     setPage(1)
   }
 
   const clearFilters = () => {
+    if (debounceRef.current) clearTimeout(debounceRef.current)
     setQ(''); setInputVal(''); setBueleg(''); setNas(''); setAmjdral(''); setPage(1)
   }
 
@@ -81,7 +110,7 @@ export default function ToliPage() {
           <input
             type="text"
             value={inputVal}
-            onChange={e => setInputVal(e.target.value)}
+            onChange={handleInputChange}
             placeholder="Монгол нэр, латин нэр эсвэл код хайх..."
             className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 focus:outline-none focus:ring-2 focus:ring-green-400 text-sm"
           />
@@ -125,6 +154,15 @@ export default function ToliPage() {
           <div className="text-5xl mb-4 animate-pulse">🌿</div>
           <p>Уншиж байна...</p>
         </div>
+      ) : error ? (
+        <div className="text-center py-20 text-red-400">
+          <div className="text-5xl mb-4">⚠️</div>
+          <p className="font-medium mb-2">Алдаа гарлаа</p>
+          <p className="text-sm text-red-300">{error}</p>
+          <button onClick={fetchData} className="mt-4 btn-primary rounded-xl px-6 py-2 text-sm">
+            Дахин оролдох
+          </button>
+        </div>
       ) : data?.items.length === 0 ? (
         <div className="text-center py-20 text-gray-400">
           <div className="text-5xl mb-4">🔍</div>
@@ -135,7 +173,11 @@ export default function ToliPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {data?.items.map(item => (
               <div key={item.id} className="card p-4 cursor-pointer hover:border-green-300"
-                onClick={() => setSelected(item)}>
+                onClick={() => setSelected(item)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={e => e.key === 'Enter' && setSelected(item)}
+                aria-label={item.mn_name}>
                 <div className="flex items-start justify-between mb-2">
                   <span className="font-mono text-xs bg-green-50 text-green-700 border border-green-200 px-2 py-0.5 rounded">{item.mn_code}</span>
                   <span className="font-mono text-xs bg-gray-50 text-gray-500 border border-gray-200 px-2 py-0.5 rounded">{item.lat_code}</span>
@@ -182,14 +224,18 @@ export default function ToliPage() {
 
       {/* Modal */}
       {selected && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4" onClick={() => setSelected(null)}>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelected(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={selected.mn_name}>
           <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-start mb-4">
               <div className="flex gap-2">
                 <span className="font-mono text-sm bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-full">{selected.mn_code}</span>
                 <span className="font-mono text-sm bg-gray-50 text-gray-500 border border-gray-200 px-3 py-1 rounded-full">{selected.lat_code}</span>
               </div>
-              <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+              <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-gray-600 text-xl" aria-label="Хаах">✕</button>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">{selected.mn_name}</h2>
             {selected.latin_name && (

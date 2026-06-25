@@ -10,10 +10,31 @@ interface Stats {
 
 export default function StatsPage() {
   const [stats, setStats] = useState<Stats | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  useEffect(() => {
-    fetch('/api/urgamal/stats').then(r => r.json()).then(setStats)
-  }, [])
+  const fetchStats = () => {
+    setError(null)
+    fetch('/api/urgamal/stats')
+      .then(r => {
+        if (!r.ok) throw new Error(`Серверийн алдаа: ${r.status}`)
+        return r.json()
+      })
+      .then(setStats)
+      .catch(err => setError(err instanceof Error ? err.message : 'Өгөгдөл ачаалахад алдаа гарлаа'))
+  }
+
+  useEffect(() => { fetchStats() }, [])
+
+  if (error) return (
+    <div className="text-center py-20 text-red-400">
+      <div className="text-5xl mb-4">⚠️</div>
+      <p className="font-medium mb-2">Алдаа гарлаа</p>
+      <p className="text-sm text-red-300">{error}</p>
+      <button onClick={fetchStats} className="mt-4 btn-primary rounded-xl px-6 py-2 text-sm">
+        Дахин оролдох
+      </button>
+    </div>
+  )
 
   if (!stats) return (
     <div className="text-center py-20 text-gray-400">
