@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  
 }
 
 model Urgamal {
@@ -16,7 +17,10 @@ model Urgamal {
   amjdral_helber  String
   aj_ahuin_bueleg String?
   createdAt       DateTime @default(now())
+
   @@index([mn_name])
   @@index([latin_name])
   @@index([aj_ahuin_bueleg])
+  @@index([nas])
+  @@index([amjdral_helber])
 }

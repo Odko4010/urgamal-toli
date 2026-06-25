@@ -1385,4 +1385,5 @@ INSERT INTO "Urgamal" (mn_code, mn_name, lat_code, latin_name, nas, amjdral_helb
   ('АЦЯР', 'Ацан яргуйжин', 'ANDI', 'Anemone dichotoma L.', 'олон наст', 'өвслөг', 'алаг өвс'),
   ('ОЙЯР', 'Ойн яргуйжин', 'ANSI', 'Anemone silvestris L.', 'олон наст', 'өвслөг', 'алаг өвс'),
   ('УМЯШ', '', 'RHER', 'Rhamnus erythroxylon Pall.', 'олон наст', 'өвслөг', 'алаг өвс'),
-  ('УСЯШ', 'Уссур яшил', 'RHUS', 'Rhamnus ussuriensis J.Vass', 'олон наст', 'өвслөг', 'алаг өвс');
+  ('УСЯШ', 'Уссур яшил', 'RHUS', 'Rhamnus ussuriensis J.Vass', 'олон наст', 'өвслөг', 'алаг өвс')
+  ON CONFLICT (mn_code) DO NOTHING;

@@ -1,15 +1,14 @@
 import { PrismaClient } from '@prisma/client'
+import { PrismaPg } from '@prisma/adapter-pg'
 import data from './urgamal_data.json'
+import 'dotenv/config'
 
-const prisma = new PrismaClient()
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL })
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('Seeding database...')
-  
-  // Clear existing data
   await prisma.urgamal.deleteMany()
-  
-  // Insert all plants
   let count = 0
   for (const plant of data as any[]) {
     await prisma.urgamal.create({
@@ -19,16 +18,16 @@ async function main() {
         lat_code: plant.lat_code,
         latin_name: plant.latin_name || null,
         nas: plant.nas,
-        amjdral_helber: plant['amjdral_helbер'] || plant.amjdral_helber || '',
+        amjdral_helber: plant.amjdral_helber || '',
         aj_ahuin_bueleg: plant.aj_ahuin_bueleg || null,
       }
     })
     count++
+    if (count % 100 === 0) console.log('Inserted ' + count + '...')
   }
-  
-  console.log(`✅ Seeded ${count} plants`)
+  console.log('Seeded ' + count + ' plants')
 }
 
 main()
   .catch(console.error)
-  .finally(() => prisma.$disconnect())
+  .finally(async () => { await prisma.disconnect() })
