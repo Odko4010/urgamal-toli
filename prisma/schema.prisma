@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Urgamal {
+  id              Int      @id @default(autoincrement())
+  mn_code         String   @unique
+  mn_name         String
+  lat_code        String
+  latin_name      String?
+  nas             String
+  amjdral_helber  String
+  aj_ahuin_bueleg String?
+  createdAt       DateTime @default(now())
+  @@index([mn_name])
+  @@index([latin_name])
+  @@index([aj_ahuin_bueleg])
+}

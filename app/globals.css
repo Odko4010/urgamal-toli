@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background-color: #f9f3e3;
+    color: #1a1a1a;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    background-color: #15803d;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    transition: background-color 0.2s;
+  }
+  .btn-primary:hover {
+    background-color: #166534;
+  }
+  .card {
+    background: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border: 1px solid #dcfce7;
+    transition: box-shadow 0.2s;
+  }
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+  }
+}
