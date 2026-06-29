@@ -1,61 +1,117 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
+
+const FEATURES = [
+  { tag: 'хайлт', title: 'Хурдан хайлт', desc: 'Монгол нэр, латин нэр, товчлолоор шуурхай хайх боломжтой.' },
+  { tag: 'шүүлт', title: 'Ангилал шүүлт', desc: 'Нас, амьдралын хэлбэр, аж ахуйн бүлгээр нарийвчлан шүүнэ.' },
+  { tag: 'мэдээлэл', title: 'Бүрэн тодорхойлолт', desc: 'Монгол, латин нэр болон биологийн ангиллын дэлгэрэнгүй.' },
+  { tag: 'хэмжээ', title: '2 263 зүйл', desc: 'Монгол орны бүх гуурст дээд ургамлын бүрдсэн жагсаалт.' },
+  { tag: 'эрэмбэ', title: 'Цагаан толгойн дараалал', desc: 'Монгол цагаан толгойн үсгийн дарааллаар эрэмбэлэгдсэн.' },
+  { tag: 'тоо баримт', title: 'Статистик харагдалт', desc: 'Бүлэг, амьдралын хэлбэр тус бүрийн тоон харьцаа.' },
+]
 
 export default function HomePage() {
   return (
     <div>
-      {/* Hero */}
-      <div className="bg-gradient-to-br from-green-800 to-green-600 text-white py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="text-6xl mb-6">🌿</div>
-          <h2 className="text-4xl font-bold mb-4">Монгол Ургамлын Нэрийн Тайлбар Толь</h2>
-          <p className="text-green-200 text-lg mb-8 max-w-2xl mx-auto">
-            Монгол орны гуурст дээд ургамлын хураангуйлсан нэрийн жагсаалт. 
-            В.И.Грубовын "Монголын гуурст ургамал таних бичиг" номд суурилсан 2263 зүйл ургамал.
-          </p>
-          <Link href="/toli" className="bg-white text-green-800 px-8 py-3 rounded-full font-bold text-lg hover:bg-green-50 transition-colors shadow-lg inline-block">
-            Тайлбар Толь Нээх →
-          </Link>
+      {/* Hero — herbarium specimen sheet */}
+      <div className="relative overflow-hidden border-b border-[var(--line)]">
+        <div className="max-w-6xl mx-auto px-5 pt-20 pb-24 grid md:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+          <div>
+            <p className="index-number mb-5">SPECIMEN COLLECTION · 2263 ENTRIES</p>
+            <h2 className="font-display text-5xl md:text-6xl font-semibold leading-[1.05] text-[var(--green-deep)] text-balance mb-6">
+              Ургамлын Нэрийн<br />
+              <span className="italic text-[var(--rust)]">Тайлбар Толь</span>
+            </h2>
+            <p className="text-[var(--ink)]/75 text-lg leading-relaxed mb-8 max-w-lg">
+              Монгол орны гуурст дээд ургамлын хураангуйлсан нэрийн жагсаалт.
+              В.И.Грубовын <span className="italic">&ldquo;Монголын гуурст ургамал таних бичиг&rdquo;</span> номд
+              суурилсан бүрэн каталог.
+            </p>
+            <div className="flex items-center gap-4">
+              <Link href="/toli" className="btn-primary inline-block">
+                Толь нээх →
+              </Link>
+              <Link href="/stats" className="btn-ghost inline-block text-sm">
+                Статистик харах
+              </Link>
+            </div>
+          </div>
+
+          {/* Signature element: specimen label card */}
+          <div className="relative mx-auto md:mx-0">
+            <div className="specimen-card p-7 w-72 rotate-1">
+              <div className="flex items-center justify-between mb-5 pl-3">
+                <span className="text-2xl">🌾</span>
+                <span className="index-number">№ 0419</span>
+              </div>
+              <h3 className="font-display text-xl text-[var(--ink)] mb-1 pl-3">Крыловын хялгана</h3>
+              <p className="italic text-sm text-[var(--sage)] mb-5 pl-3">Stipa krylovii</p>
+              <div className="torn-divider mb-4" />
+              <div className="space-y-2.5 pl-3 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-[var(--ink)]/55">Нас</span>
+                  <span className="field-tag bg-[var(--sage-pale)] text-[var(--green-deep)]">олон наст</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[var(--ink)]/55">Хэлбэр</span>
+                  <span className="field-tag bg-[var(--rust-pale)] text-[var(--rust)]">өвслөг</span>
+                </div>
+              </div>
+            </div>
+            <div className="specimen-card p-7 w-72 absolute -bottom-10 -left-8 -rotate-3 -z-10 opacity-60 hidden md:block">
+              <div className="h-4 w-24 bg-[var(--sage-pale)] rounded-sm mb-4" />
+              <div className="h-3 w-32 bg-[var(--paper-deep)] rounded-sm mb-6" />
+              <div className="h-2 w-full bg-[var(--paper-deep)] rounded-sm mb-2" />
+              <div className="h-2 w-2/3 bg-[var(--paper-deep)] rounded-sm" />
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Features */}
-      <div className="max-w-6xl mx-auto px-4 py-16">
-        <h3 className="text-2xl font-bold text-green-800 text-center mb-10">Системийн боломжууд</h3>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { icon: '🔍', title: 'Хурдан хайлт', desc: 'Монгол нэр, латин нэр, кодоор хайх боломжтой' },
-            { icon: '📊', title: 'Ангилал шүүлт', desc: 'Нас, амьдралын хэлбэр, аж ахуйн бүлгээр шүүж харах' },
-            { icon: '📋', title: 'Бүрэн мэдээлэл', desc: 'Монгол нэр, латин нэр, товчлол, биологийн ангилал' },
-            { icon: '🌱', title: '2263 зүйл', desc: 'Монгол орны бүх гуурст дээд ургамлын нэрийн жагсаалт' },
-            { icon: '🗂️', title: 'Цагаан толгойн дараалал', desc: 'Монгол цагаан толгойгоор эрэмбэлэгдсэн' },
-            { icon: '📈', title: 'Статистик', desc: 'Ургамлын бүлэг, амьдралын хэлбэрийн статистик мэдээлэл' },
-          ].map((f, i) => (
-            <div key={i} className="card p-6">
-              <div className="text-4xl mb-3">{f.icon}</div>
-              <h4 className="font-bold text-green-800 mb-2">{f.title}</h4>
-              <p className="text-gray-600 text-sm">{f.desc}</p>
+      <div className="max-w-6xl mx-auto px-5 py-20">
+        <p className="index-number mb-2">БОЛОМЖУУД</p>
+        <h3 className="font-display text-3xl font-semibold text-[var(--green-deep)] mb-12">
+          Системийн боломжууд
+        </h3>
+        <div className="grid md:grid-cols-3 gap-5">
+          {FEATURES.map((f, i) => (
+            <div key={i} className="specimen-card p-6">
+              <p className="index-number mb-3 uppercase">{f.tag}</p>
+              <h4 className="font-display text-lg font-semibold text-[var(--ink)] mb-2">{f.title}</h4>
+              <p className="text-[var(--ink)]/65 text-sm leading-relaxed">{f.desc}</p>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Info */}
-      <div className="bg-green-50 border-t border-green-200 py-12 px-4">
+      {/* Info: abbreviation principle */}
+      <div className="bg-[var(--paper-deep)] border-t border-[var(--line)] py-16 px-5">
         <div className="max-w-4xl mx-auto">
-          <h3 className="text-xl font-bold text-green-800 mb-4">Товчлолын зарчим</h3>
-          <div className="bg-white rounded-xl p-6 shadow-sm">
-            <p className="text-gray-700 mb-3">
-              Ургамлын нэрийг хураангуйлахад латин болон монгол нэрийн аль алинд нь ижил зарчим баримтлаж 
-              тухайн ургамлын төрөл, зүйлийн нэрийн эхний 2 үсгийг оролцуулан 4 үсгээр тэмдэглэсэн.
+          <p className="index-number mb-2">АРГА ЗҮЙ</p>
+          <h3 className="font-display text-2xl font-semibold text-[var(--green-deep)] mb-5">
+            Товчлолын зарчим
+          </h3>
+          <div className="specimen-card p-7">
+            <p className="text-[var(--ink)]/75 leading-relaxed mb-5">
+              Ургамлын нэрийг хураангуйлахад латин болон монгол нэрийн аль алинд нь ижил зарчим баримтлаж,
+              тухайн ургамлын төрөл, зүйлийн нэрийн эхний хоёр үсгийг оролцуулан дөрвөн үсгээр тэмдэглэсэн.
             </p>
-            <div className="grid md:grid-cols-2 gap-4 mt-4">
-              <div className="bg-green-50 rounded-lg p-4">
-                <p className="font-mono text-sm"><span className="font-bold text-green-700">Stipa Krylovii</span> → STKR</p>
-                <p className="font-mono text-sm"><span className="font-bold text-green-700">Крыловын хялгана</span> → КРХЯ</p>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div className="bg-[var(--paper)] rounded-sm p-4 border border-[var(--line)]">
+                <p className="font-mono-data text-sm text-[var(--ink)]/80">
+                  <span className="italic text-[var(--green)]">Stipa krylovii</span> → STKR
+                </p>
+                <p className="font-mono-data text-sm text-[var(--ink)]/80 mt-1.5">
+                  Крыловын хялгана → КРХЯ
+                </p>
               </div>
-              <div className="bg-green-50 rounded-lg p-4">
-                <p className="font-mono text-sm"><span className="font-bold text-green-700">Aconitum barbatum</span> → ACBA</p>
-                <p className="font-mono text-sm"><span className="font-bold text-green-700">Aconitum baicalense</span> → ACBAI</p>
+              <div className="bg-[var(--paper)] rounded-sm p-4 border border-[var(--line)]">
+                <p className="font-mono-data text-sm text-[var(--ink)]/80">
+                  <span className="italic text-[var(--green)]">Aconitum barbatum</span> → ACBA
+                </p>
+                <p className="font-mono-data text-sm text-[var(--ink)]/80 mt-1.5">
+                  Aconitum baicalense → ACBAI
+                </p>
               </div>
             </div>
           </div>
