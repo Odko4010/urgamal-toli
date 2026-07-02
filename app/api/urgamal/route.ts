@@ -17,8 +17,6 @@ export async function GET(req: NextRequest) {
         OR: [
           { mn_name:    { contains: q, mode: 'insensitive' as const } },
           { latin_name: { contains: q, mode: 'insensitive' as const } },
-          { mn_code:    { contains: q, mode: 'insensitive' as const } },
-          { lat_code:   { contains: q, mode: 'insensitive' as const } },
         ],
       }),
       ...(nas     && { nas:             { equals:   nas,     mode: 'insensitive' as const } }),
@@ -26,8 +24,17 @@ export async function GET(req: NextRequest) {
       ...(bueleg  && { aj_ahuin_bueleg: { contains: bueleg,  mode: 'insensitive' as const } }),
     }
 
+    const select = {
+      id:              true,
+      mn_name:         true,
+      latin_name:      true,
+      nas:             true,
+      amjdral_helber:  true,
+      aj_ahuin_bueleg: true,
+    }
+
     const [items, total] = await prisma.$transaction([
-      prisma.urgamal.findMany({ where, skip, take: limit, orderBy: { mn_name: 'asc' } }),
+      prisma.urgamal.findMany({ where, select, skip, take: limit, orderBy: { mn_name: 'asc' } }),
       prisma.urgamal.count({ where }),
     ])
 

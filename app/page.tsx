@@ -12,11 +12,16 @@ const FEATURES = [
 export default function HomePage() {
   return (
     <div>
-      {/* Hero — herbarium specimen sheet */}
-      <div className="relative overflow-hidden border-b border-[var(--line)]">
-        <div className="max-w-6xl mx-auto px-5 pt-20 pb-24 grid md:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
+      {/* Hero — warm botanical */}
+      <div className="relative overflow-hidden">
+        {/* Decorative leaf accents */}
+        <svg className="absolute -top-10 -right-10 w-64 h-64 opacity-[0.08] text-[var(--green-deep)] -z-0" viewBox="0 0 200 200" fill="none">
+          <path d="M100 10C140 40 170 80 160 130C150 175 110 195 100 190C90 195 50 175 40 130C30 80 60 40 100 10Z" fill="currentColor"/>
+          <path d="M100 20V185" stroke="var(--paper)" strokeWidth="3"/>
+        </svg>
+        <div className="max-w-6xl mx-auto px-5 pt-16 pb-20 grid md:grid-cols-[1.1fr_0.9fr] gap-12 items-center relative">
           <div>
-            <p className="index-number mb-5">SPECIMEN COLLECTION · 2263 ENTRIES</p>
+            <p className="index-number mb-4">🌿 SPECIMEN COLLECTION · 2263 ENTRIES</p>
             <h2 className="font-display text-5xl md:text-6xl font-semibold leading-[1.05] text-[var(--green-deep)] text-balance mb-6">
               Ургамлын Нэрийн<br />
               <span className="italic text-[var(--rust)]">Тайлбар Толь</span>
@@ -38,39 +43,33 @@ export default function HomePage() {
 
           {/* Signature element: specimen label card */}
           <div className="relative mx-auto md:mx-0">
-            <div className="specimen-card p-7 w-72 rotate-1">
-              <div className="flex items-center justify-between mb-5 pl-3">
-                <span className="text-2xl">🌾</span>
+            <div className="specimen-card p-7 w-72">
+              <div className="flex items-center justify-between mb-5">
+                <span className="text-3xl">🌾</span>
                 <span className="index-number">№ 0419</span>
               </div>
-              <h3 className="font-display text-xl text-[var(--ink)] mb-1 pl-3">Крыловын хялгана</h3>
-              <p className="italic text-sm text-[var(--sage)] mb-5 pl-3">Stipa krylovii</p>
+              <h3 className="font-display text-xl text-[var(--ink)] mb-1">Крыловын хялгана</h3>
+              <p className="italic text-sm text-[var(--sage)] mb-5">Stipa krylovii</p>
               <div className="torn-divider mb-4" />
-              <div className="space-y-2.5 pl-3 text-sm">
-                <div className="flex justify-between">
+              <div className="space-y-2.5 text-sm">
+                <div className="flex justify-between items-center">
                   <span className="text-[var(--ink)]/55">Нас</span>
                   <span className="field-tag bg-[var(--sage-pale)] text-[var(--green-deep)]">олон наст</span>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between items-center">
                   <span className="text-[var(--ink)]/55">Хэлбэр</span>
                   <span className="field-tag bg-[var(--rust-pale)] text-[var(--rust)]">өвслөг</span>
                 </div>
               </div>
-            </div>
-            <div className="specimen-card p-7 w-72 absolute -bottom-10 -left-8 -rotate-3 -z-10 opacity-60 hidden md:block">
-              <div className="h-4 w-24 bg-[var(--sage-pale)] rounded-sm mb-4" />
-              <div className="h-3 w-32 bg-[var(--paper-deep)] rounded-sm mb-6" />
-              <div className="h-2 w-full bg-[var(--paper-deep)] rounded-sm mb-2" />
-              <div className="h-2 w-2/3 bg-[var(--paper-deep)] rounded-sm" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Features */}
-      <div className="max-w-6xl mx-auto px-5 py-20">
-        <p className="index-number mb-2">БОЛОМЖУУД</p>
-        <h3 className="font-display text-3xl font-semibold text-[var(--green-deep)] mb-12">
+      <div className="max-w-6xl mx-auto px-5 py-16">
+        <p className="index-number mb-2">🌱 БОЛОМЖУУД</p>
+        <h3 className="font-display text-3xl font-semibold text-[var(--green-deep)] mb-10">
           Системийн боломжууд
         </h3>
         <div className="grid md:grid-cols-3 gap-5">
@@ -85,9 +84,9 @@ export default function HomePage() {
       </div>
 
       {/* Info: abbreviation principle */}
-      <div className="bg-[var(--paper-deep)] border-t border-[var(--line)] py-16 px-5">
+      <div className="bg-[var(--paper-deep)] py-16 px-5">
         <div className="max-w-4xl mx-auto">
-          <p className="index-number mb-2">АРГА ЗҮЙ</p>
+          <p className="index-number mb-2">📖 АРГА ЗҮЙ</p>
           <h3 className="font-display text-2xl font-semibold text-[var(--green-deep)] mb-5">
             Товчлолын зарчим
           </h3>
@@ -97,7 +96,7 @@ export default function HomePage() {
               тухайн ургамлын төрөл, зүйлийн нэрийн эхний хоёр үсгийг оролцуулан дөрвөн үсгээр тэмдэглэсэн.
             </p>
             <div className="grid md:grid-cols-2 gap-4">
-              <div className="bg-[var(--paper)] rounded-sm p-4 border border-[var(--line)]">
+              <div className="bg-[var(--paper)] rounded-xl p-4 border border-[var(--line)]">
                 <p className="font-mono-data text-sm text-[var(--ink)]/80">
                   <span className="italic text-[var(--green)]">Stipa krylovii</span> → STKR
                 </p>
@@ -105,7 +104,7 @@ export default function HomePage() {
                   Крыловын хялгана → КРХЯ
                 </p>
               </div>
-              <div className="bg-[var(--paper)] rounded-sm p-4 border border-[var(--line)]">
+              <div className="bg-[var(--paper)] rounded-xl p-4 border border-[var(--line)]">
                 <p className="font-mono-data text-sm text-[var(--ink)]/80">
                   <span className="italic text-[var(--green)]">Aconitum barbatum</span> → ACBA
                 </p>

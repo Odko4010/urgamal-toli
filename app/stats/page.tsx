@@ -105,7 +105,7 @@ export default function StatsPage() {
             <div key={b.aj_ahuin_bueleg} className="flex items-center gap-3">
               <span className="text-sm text-[var(--ink)]/70 w-32 shrink-0">{b.aj_ahuin_bueleg}</span>
               <div className="flex-1 h-6 bg-[var(--paper-deep)] rounded-full overflow-hidden">
-                <div className="h-full bg-[#C99B5E] rounded-full flex items-center justify-end pr-2 transition-all"
+                <div className="h-full bg-[var(--gold)] rounded-full flex items-center justify-end pr-2 transition-all"
                   style={{ width: `${(b._count / maxBueleg) * 100}%`, minWidth: '40px' }}>
                   <span className="font-mono-data text-xs font-bold text-[#5A3F18]">{b._count}</span>
                 </div>

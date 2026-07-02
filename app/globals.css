@@ -1,17 +1,20 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @layer base {
   :root {
-    --paper: #F6F1E4;
-    --paper-deep: #EFE7D2;
-    --ink: #20241B;
-    --green-deep: #2C3B24;
-    --green: #45572F;
-    --sage: #8B9474;
-    --sage-pale: #DCE2CB;
-    --rust: #A8703E;
-    --rust-pale: #EADCC8;
-    --line: #C9BFA2;
+    --paper: #FBF3E3;
+    --paper-deep: #F3E4C8;
+    --ink: #2B2418;
+    --green-deep: #1F4D2E;
+    --green: #2D7A42;
+    --green-bright: #4A9B5E;
+    --sage: #7A8F6E;
+    --sage-pale: #DCEBD9;
+    --rust: #C2622D;
+    --rust-pale: #F5DCC3;
+    --gold: #D4972E;
+    --gold-pale: #F7E6BE;
+    --line: #DDC9A3;
   }
 
   body {
@@ -19,8 +22,9 @@
     background-color: var(--paper);
     color: var(--ink);
     background-image:
-      radial-gradient(circle at 1px 1px, rgba(44,59,36,0.05) 1px, transparent 0);
-    background-size: 22px 22px;
+      radial-gradient(ellipse 800px 500px at 10% -10%, rgba(74,155,94,0.10), transparent),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(194,98,45,0.08), transparent);
+    background-attachment: fixed;
   }
 
   h1, h2, h3, h4, .font-display {
@@ -33,90 +37,92 @@
 }
 
 @layer components {
-  /* Specimen card: herbarium label aesthetic */
   .specimen-card {
-    background: #FFFDF7;
+    background: linear-gradient(165deg, #FFFCF5 0%, #FDF6E8 100%);
     border: 1px solid var(--line);
-    border-radius: 2px;
+    border-radius: 14px;
     position: relative;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-    box-shadow: 0 1px 2px rgba(32,36,27,0.06);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 8px rgba(43,36,24,0.07);
   }
   .specimen-card::before {
     content: '';
     position: absolute;
-    top: 10px;
-    left: 10px;
-    width: 5px;
-    height: 5px;
+    top: -30px;
+    right: -30px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    background: var(--line);
+    background: radial-gradient(circle, rgba(74,155,94,0.14), transparent 70%);
   }
   .specimen-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--green);
-    box-shadow: 0 10px 24px rgba(32,36,27,0.12);
+    transform: translateY(-4px);
+    border-color: var(--green-bright);
+    box-shadow: 0 14px 32px rgba(31,77,46,0.16);
   }
 
   .field-tag {
     display: inline-flex;
     align-items: center;
-    font-size: 0.68rem;
-    letter-spacing: 0.02em;
-    padding: 0.2rem 0.55rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.01em;
+    padding: 0.25rem 0.65rem;
     border-radius: 999px;
     font-weight: 600;
-    border: 1px solid transparent;
   }
 
   .btn-primary {
-    background-color: var(--green-deep);
-    color: var(--paper);
-    padding: 0.65rem 1.4rem;
-    border-radius: 2px;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-deep) 100%);
+    color: #FFFEF8;
+    padding: 0.7rem 1.5rem;
+    border-radius: 10px;
     font-weight: 600;
     letter-spacing: 0.01em;
-    transition: background-color 0.18s, transform 0.18s;
+    box-shadow: 0 4px 14px rgba(31,77,46,0.25);
+    transition: box-shadow 0.2s, transform 0.2s;
   }
   .btn-primary:hover {
-    background-color: var(--green);
+    box-shadow: 0 6px 20px rgba(31,77,46,0.35);
     transform: translateY(-1px);
   }
 
   .btn-ghost {
-    border: 1px solid var(--line);
+    border: 1.5px solid var(--line);
     color: var(--green-deep);
-    padding: 0.6rem 1.1rem;
-    border-radius: 2px;
+    background: #FFFCF5;
+    padding: 0.65rem 1.2rem;
+    border-radius: 10px;
     transition: background-color 0.18s, border-color 0.18s;
   }
   .btn-ghost:hover {
-    background: var(--paper-deep);
-    border-color: var(--green);
+    background: var(--sage-pale);
+    border-color: var(--green-bright);
   }
 
   .input-field {
-    background: #FFFDF7;
-    border: 1px solid var(--line);
-    border-radius: 2px;
+    background: #FFFCF5;
+    border: 1.5px solid var(--line);
+    border-radius: 10px;
     transition: border-color 0.18s, box-shadow 0.18s;
   }
   .input-field:focus {
     outline: none;
-    border-color: var(--green);
-    box-shadow: 0 0 0 3px rgba(69,87,47,0.12);
+    border-color: var(--green-bright);
+    box-shadow: 0 0 0 3px rgba(74,155,94,0.15);
   }
 
   .index-number {
     font-family: var(--font-jetbrains), monospace;
     font-size: 0.7rem;
-    color: var(--sage);
-    letter-spacing: 0.03em;
+    color: var(--green);
+    font-weight: 600;
+    letter-spacing: 0.04em;
   }
 
   .torn-divider {
     height: 1px;
-    background: repeating-linear-gradient(90deg, var(--line) 0, var(--line) 6px, transparent 6px, transparent 11px);
+    background: linear-gradient(90deg, var(--line), transparent);
   }
 }
 

@@ -30,10 +30,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="mn" className={`${fraunces.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body>
-        <header className="border-b border-[var(--line)] bg-[var(--paper)]/95 backdrop-blur-sm sticky top-0 z-40">
+        <header className="bg-[var(--paper)]/90 backdrop-blur-md sticky top-0 z-40 shadow-[0_1px_0_var(--line)]">
           <div className="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
             <Link href="/" className="flex items-center gap-3 group">
-              <span className="text-2xl leading-none transition-transform group-hover:-rotate-6">🌿</span>
+              <span className="text-2xl leading-none transition-transform group-hover:rotate-12 group-hover:scale-110 inline-block">🌿</span>
               <div>
                 <h1 className="font-display text-lg font-semibold leading-tight text-[var(--green-deep)] tracking-tight">
                   Ургамлын Тайлбар Толь
@@ -53,10 +53,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main className="min-h-screen">
           {children}
         </main>
-        <footer className="border-t border-[var(--line)] bg-[var(--paper-deep)] mt-16">
+        <footer className="bg-gradient-to-b from-[var(--paper-deep)] to-[var(--sage-pale)] mt-16">
           <div className="max-w-6xl mx-auto px-5 py-8 text-center">
-            <div className="torn-divider max-w-xs mx-auto mb-6" />
-            <p className="text-xs text-[var(--sage)] tracking-wide">
+            <p className="text-2xl mb-3">🌿</p>
+            <p className="text-xs text-[var(--green-deep)]/70 tracking-wide">
               © 2024 Монголын Бэлчээрийн Менежментийн Холбоо · Б.Болормаа, Д.Булгамаа, Л.Отгонтуяа бусад
             </p>
           </div>

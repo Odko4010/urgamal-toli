@@ -3,9 +3,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 
 interface Urgamal {
   id: number
-  mn_code: string
   mn_name: string
-  lat_code: string
   latin_name: string | null
   nas: string
   amjdral_helber: string
@@ -22,14 +20,14 @@ interface ApiResponse {
 const NAS_COLORS: Record<string, string> = {
   'олон наст': 'bg-[var(--sage-pale)] text-[var(--green-deep)]',
   'нэг наст': 'bg-[var(--rust-pale)] text-[var(--rust)]',
-  'хоёр наст': 'bg-[#E7E0EF] text-[#6B4A8A]',
+  'хоёр наст': 'bg-[#EDE0F2] text-[#7A4F94]',
 }
 
 const AMJDRAL_COLORS: Record<string, string> = {
   'өвслөг': 'bg-[var(--sage-pale)] text-[var(--green-deep)]',
-  'модлог': 'bg-[#F0E2C4] text-[#7A5A22]',
-  'сөөглөг': 'bg-[#D7E8E2] text-[#21655A]',
-  'сөөг': 'bg-[#D7E8E2] text-[#21655A]',
+  'модлог': 'bg-[var(--gold-pale)] text-[#8A5A0F]',
+  'сөөглөг': 'bg-[#D2EDE3] text-[#1C6E54]',
+  'сөөг': 'bg-[#D2EDE3] text-[#1C6E54]',
 }
 
 export default function ToliPage() {
@@ -136,7 +134,10 @@ export default function ToliPage() {
             <option value="алаг өвс">Алаг өвс</option>
             <option value="үетэн">Үетэн</option>
             <option value="хадлан">Хадлан</option>
-            <option value="хогийн ургамал">Хогийн ургамал</option>
+            <option value="мод, сөөг">Мод, сөөг</option>
+            <option value="буурцагтан">Буурцагтан</option>
+            <option value="улалж">Улалж</option>
+            <option value="шарилж">Шарилж</option>
           </select>
           {data && (
             <span className="ml-auto index-number">
@@ -175,18 +176,19 @@ export default function ToliPage() {
                 tabIndex={0}
                 onKeyDown={e => e.key === 'Enter' && setSelected(item)}
                 aria-label={item.mn_name}>
-                <div className="flex items-start justify-between mb-3 pl-2">
+                <div className="flex items-start justify-between mb-3">
                   <span className="index-number">№ {String(item.id).padStart(4, '0')}</span>
+                  <span className="text-lg">🌿</span>
                 </div>
-                <h3 className="font-display font-semibold text-[var(--ink)] text-lg mb-1 pl-2">{item.mn_name}</h3>
+                <h3 className="font-display font-semibold text-[var(--ink)] text-lg mb-1">{item.mn_name}</h3>
                 {item.latin_name && (
-                  <p className="text-sm text-[var(--sage)] italic mb-4 pl-2 truncate">{item.latin_name}</p>
+                  <p className="text-sm text-[var(--sage)] italic mb-4 truncate">{item.latin_name}</p>
                 )}
-                <div className="flex flex-wrap gap-1.5 pl-2">
+                <div className="flex flex-wrap gap-1.5">
                   <span className={`field-tag ${NAS_COLORS[item.nas] || 'bg-[var(--paper-deep)] text-[var(--ink)]/60'}`}>{item.nas}</span>
                   <span className={`field-tag ${AMJDRAL_COLORS[item.amjdral_helber] || 'bg-[var(--paper-deep)] text-[var(--ink)]/60'}`}>{item.amjdral_helber}</span>
                   {item.aj_ahuin_bueleg && (
-                    <span className="field-tag bg-[#F0E2C4] text-[#7A5A22]">{item.aj_ahuin_bueleg}</span>
+                    <span className="field-tag bg-[var(--gold-pale)] text-[#8A5A0F]">{item.aj_ahuin_bueleg}</span>
                   )}
                 </div>
               </div>
@@ -205,7 +207,7 @@ export default function ToliPage() {
                 else p = page - 3 + i
                 return (
                   <button key={p} onClick={() => setPage(p)}
-                    className={`w-9 h-9 rounded-sm text-sm font-medium transition-colors ${p === page ? 'bg-[var(--green-deep)] text-[var(--paper)]' : 'btn-ghost'}`}>
+                    className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${p === page ? 'bg-[var(--green-deep)] text-[var(--paper)]' : 'btn-ghost'}`}>
                     {p}
                   </button>
                 )
@@ -223,7 +225,7 @@ export default function ToliPage() {
           role="dialog"
           aria-modal="true"
           aria-label={selected.mn_name}>
-          <div className="bg-[#FFFDF7] rounded-sm shadow-2xl max-w-md w-full p-7 border border-[var(--line)]" onClick={e => e.stopPropagation()}>
+          <div className="bg-[#FFFCF5] rounded-2xl shadow-2xl max-w-md w-full p-7 border border-[var(--line)]" onClick={e => e.stopPropagation()}>
             <div className="flex justify-between items-start mb-5">
               <span className="index-number">СПЕЦИМЕН № {String(selected.id).padStart(4, '0')}</span>
               <button onClick={() => setSelected(null)} className="text-[var(--sage)] hover:text-[var(--ink)] text-xl leading-none" aria-label="Хаах">✕</button>
@@ -245,7 +247,7 @@ export default function ToliPage() {
               {selected.aj_ahuin_bueleg && (
                 <div className="flex justify-between py-1">
                   <span className="text-[var(--ink)]/55 text-sm">Аж ахуйн бүлэг</span>
-                  <span className="field-tag bg-[#F0E2C4] text-[#7A5A22]">{selected.aj_ahuin_bueleg}</span>
+                  <span className="field-tag bg-[var(--gold-pale)] text-[#8A5A0F]">{selected.aj_ahuin_bueleg}</span>
                 </div>
               )}
             </div>
